@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaam</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./app.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/1bcd2404f3.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="cover"></div>
+      <div class="container">
+        <div id="filter-bar" v-if="filters.size">
+          <span class="chip" v-for="(filter, idx) in filters" :key="idx"
+            >{{filter}}&nbsp;
+            <i
+              class="fa-solid fa-circle-xmark"
+              @click="removeFilter(filter)"
+            ></i>
+          </span>
+          <span class="chip right" @click="clearFilters()"
+            ><i class="fa-solid fa-trash"></i>&nbsp;&nbsp;Clear All</span
+          >
+        </div>
+        <div
+          class="data-itm flex"
+          v-for="(itm, idx) in filteredData"
+          :key="idx"
+        >
+          <div class="flex logo-and-title">
+            <div class="logo-container">
+              <img
+                :src="itm.company_logo"
+                :alt="itm.company+`'s logo`"
+                class="logo"
+              />
+            </div>
+            <div class="info-text">
+              <h2>{{itm.company}}</h2>
+              <h1>{{itm.position}}</h1>
+              <div id="metadata">
+                <span>{{new Date(itm.posted_on).toLocaleDateString()}}</span>
+                <span>{{itm.timing}}</span>
+                <span>{{itm.location}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="tags">
+            <span
+              class="chip"
+              v-for="(keyword, idx) in itm.keywords"
+              :key="idx"
+              @click="addFilter(keyword)"
+              >{{keyword}}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
